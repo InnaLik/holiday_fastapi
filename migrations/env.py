@@ -6,8 +6,9 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from about_holiday.config import DB_USER, DB_PORT, DB_PASS, DB_NAME, DB_HOST
 from about_holiday.see_holiday.models import Base as see_metadata
+from about_holiday.config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
+
 sys.path.append(os.path.join(sys.path[0], 'about_holiday'))
 
 
@@ -31,6 +32,7 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 target_metadata = [see_metadata.metadata]
+
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
