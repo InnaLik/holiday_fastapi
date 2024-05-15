@@ -1,4 +1,7 @@
+import asyncio
+
 from fastapi import APIRouter, Depends
+from fastapi_cache.decorator import cache
 from sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -34,7 +37,9 @@ async def get_holiday_month(id_m: int, sessions: AsyncSession = Depends(get_asyn
 
 
 @router.get("/{month}/{day}/")
+@cache(expire=500)
 async def get_holiday_month(month: int, day: int, sessions: AsyncSession = Depends(get_async_session)):
+    await asyncio.sleep(10)
     query = select(Holiday).where(Holiday.id_month == month).where(Holiday.id_day == day).order_by(Holiday.id_day)
     result = await sessions.execute(query)
     return {"status": "success",
